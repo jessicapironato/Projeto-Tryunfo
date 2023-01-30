@@ -24,6 +24,7 @@ class App extends React.Component {
     this.numberFilled = this.numberFilled.bind(this);
     this.buttonVerify = this.buttonVerify.bind(this);
     this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
+    this.verifySuperTrunfoChecked = this.verifySuperTrunfoChecked.bind(this);
   }
 
   onInputChange({ target }) {
@@ -68,9 +69,18 @@ class App extends React.Component {
       cardAttr2: '0',
       cardAttr3: '0',
       cardRare: 'normal',
+      cardTrunfo: false,
       isSaveButtonDisabled: true,
-    }));
+    }), this.verifySuperTrunfoChecked);
   }
+
+  // questao 7 >>> Com auxilio de CArol Mendes e colegas (a parte de usar a hof some para percorrer o array)
+  verifySuperTrunfoChecked = () => {
+    const { cardSaved } = this.state;
+    const verifica = cardSaved.some((card) => card.cardTrunfo === true);
+
+    this.setState({ hasTrunfo: verifica });
+  };
 
   // questão 5 : ver
   textFilled = () => {
