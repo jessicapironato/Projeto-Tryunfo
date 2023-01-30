@@ -19,6 +19,10 @@ class App extends React.Component {
     };
 
     this.onInputChange = this.onInputChange.bind(this);
+    this.textFilled = this.textFilled.bind(this);
+    this.numberFilled = this.numberFilled.bind(this);
+    this.buttonVerify = this.buttonVerify.bind(this);
+
     // this.onSaveButtonClick = this.onSaveButtonClicke.bind(this);
   }
 
@@ -26,11 +30,46 @@ class App extends React.Component {
     const { name } = target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
 
-    this.setState((previousState) => ({
-      ...previousState,
+    this.setState({
       [name]: value,
-    }));
+    }, this.buttonVerify);
   }
+
+  // questão 5 : ver
+  textFilled = () => {
+    const { cardImage, cardName, cardDescription, cardRare } = this.state;
+
+    return (cardImage === '' || cardName === ''
+      || cardDescription === '' || cardRare === '');
+  };
+
+  numberFilled = () => {
+    const { cardAttr1, cardAttr2, cardAttr3 } = this.state;
+    const sum = 210;
+    const max = 90;
+    const min = 0;
+    const card1 = parseInt(cardAttr1, 10);
+    const card2 = parseInt(cardAttr2, 10);
+    const card3 = parseInt(cardAttr3, 10);
+
+    return ((card1 + card2 + card3 > sum)
+    || (card1 > max || card2 > max || card3 > max)
+    || (card1 < min || card2 < min || card3 < min));
+  };
+
+  buttonVerify = () => {
+    const text = this.textFilled();
+    const number = this.numberFilled();
+    if (text === true || number === true) {
+      this.setState({
+        isSaveButtonDisabled: true,
+      });
+    } else {
+      this.setState({
+        isSaveButtonDisabled: false,
+      });
+    }
+  };
 
   // onSaveButtonClick({ target }) {
   //   const { name, value } = target;
