@@ -16,14 +16,14 @@ class App extends React.Component {
       cardTrunfo: false,
       hasTrunfo: false,
       isSaveButtonDisabled: true,
+      cardSaved: [],
     };
 
     this.onInputChange = this.onInputChange.bind(this);
     this.textFilled = this.textFilled.bind(this);
     this.numberFilled = this.numberFilled.bind(this);
     this.buttonVerify = this.buttonVerify.bind(this);
-
-    // this.onSaveButtonClick = this.onSaveButtonClicke.bind(this);
+    this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
   }
 
   onInputChange({ target }) {
@@ -33,6 +33,43 @@ class App extends React.Component {
     this.setState({
       [name]: value,
     }, this.buttonVerify);
+  }
+
+  // requisito 6
+  onSaveButtonClick() {
+    const {
+      cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardImage,
+      cardRare,
+      cardTrunfo,
+    } = this.state;
+
+    const informacaoAntigas = {
+      cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardImage,
+      cardRare,
+      cardTrunfo,
+    };
+
+    this.setState((previewState) => ({
+      cardSaved: [...previewState.cardSaved, informacaoAntigas],
+      cardName: '',
+      cardImage: '',
+      cardDescription: '',
+      cardAttr1: '0',
+      cardAttr2: '0',
+      cardAttr3: '0',
+      cardRare: 'normal',
+      isSaveButtonDisabled: true,
+    }));
   }
 
   // questão 5 : ver
@@ -71,24 +108,16 @@ class App extends React.Component {
     }
   };
 
-  // onSaveButtonClick({ target }) {
-  //   const { name, value } = target;
-
-  //   this.setState((previousState) => ({
-  //     ...previousState,
-  //     [name]: value,
-  //   }));
-  // }
-
   render() {
     const { cardName, cardDescription, cardAttr1,
       cardAttr2, cardAttr3, cardImage, cardRare,
-      cardTrunfo, hasTrunfo, isSaveButtonDisabled } = this.state;
+      cardTrunfo, hasTrunfo, isSaveButtonDisabled, cardSaved } = this.state;
 
     return (
       <div>
         <h1>Tryunfo</h1>
         <Form
+        // Nova forma de escrever : { ...this.state } depois chamar as funções
           cardName={ cardName }
           cardDescription={ cardDescription }
           cardAttr1={ cardAttr1 }
@@ -98,6 +127,7 @@ class App extends React.Component {
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
           hasTrunfo={ hasTrunfo }
+          cardSaved={ cardSaved }
           isSaveButtonDisabled={ isSaveButtonDisabled }
           onSaveButtonClick={ this.onSaveButtonClick }
           onInputChange={ this.onInputChange }
