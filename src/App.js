@@ -74,7 +74,7 @@ class App extends React.Component {
     }), this.verifySuperTrunfoChecked);
   }
 
-  // questao 7 >>> Com auxilio de CArol Mendes e colegas (a parte de usar a hof some para percorrer o array)
+  // questao 7 >>>
   verifySuperTrunfoChecked = () => {
     const { cardSaved } = this.state;
     const verifica = cardSaved.some((card) => card.cardTrunfo === true);
@@ -155,6 +155,21 @@ class App extends React.Component {
           onInputChange={ this.onInputChange }
 
         />
+        <div>
+          {cardSaved.map((card) => (
+            <Card
+              key={ card.cardName }
+              cardName={ card.cardName }
+              cardDescription={ card.cardDescription }
+              cardAttr1={ card.cardAttr1 }
+              cardAttr2={ card.cardAttr2 }
+              cardAttr3={ card.cardAttr3 }
+              cardImage={ card.cardImage }
+              cardRare={ card.cardRare }
+              cardTrunfo={ card.CardTrunfo }
+            />))}
+        </div>
+
       </div>
     );
   }
